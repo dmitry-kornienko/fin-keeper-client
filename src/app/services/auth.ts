@@ -20,6 +20,13 @@ export const authApi = api.injectEndpoints({
                 body: UserData
             })
         }),
+        updateUserInfo: builder.mutation<ResponsLoginData, Pick<User, '_id' | 'name' | 'email'>>({
+            query: (data) => ({
+                url: `/user/update-info/${data._id}`,
+                method: 'PATCH',
+                body: data
+            })
+        }),
         current: builder.query<ResponsLoginData, void>({
             query: () => ({
                 url: '/user/current',
@@ -29,6 +36,6 @@ export const authApi = api.injectEndpoints({
     })
 });
 
-export const { useLoginMutation, useRegisterMutation, useCurrentQuery } = authApi;
+export const { useLoginMutation, useRegisterMutation, useCurrentQuery, useUpdateUserInfoMutation } = authApi;
 
-export const { endpoints: { login, register, current } } = authApi;
+export const { endpoints: { login, register, current, updateUserInfo } } = authApi;

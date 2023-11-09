@@ -22,10 +22,10 @@ export const Header = () => {
     const userPopover = (
         <div>
             <p className={ styles.populate__header }>Управление аккаунтом</p>
-            <CustomButton type="text">
+            <CustomButton type="text" onClick={ () => navigate(`${Paths.editUser}/${user?._id}`) }>
                 Пользователь
             </CustomButton>
-            <CustomButton type="text">
+            <CustomButton type="text" >
                 Поставщик
             </CustomButton>
         </div>

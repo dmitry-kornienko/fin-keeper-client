@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
 import "./index.css";
+import { Auth } from "./features/auth/auth";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -15,11 +16,13 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <ConfigProvider theme={{
-                    algorithm: theme.defaultAlgorithm
-                }}>
-                    <App />
-                </ConfigProvider>
+                <Auth>
+                    <ConfigProvider theme={{
+                        algorithm: theme.defaultAlgorithm
+                    }}>
+                        <App />
+                    </ConfigProvider>
+                </Auth>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>

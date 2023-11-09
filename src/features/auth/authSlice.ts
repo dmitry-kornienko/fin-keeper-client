@@ -1,5 +1,5 @@
 import { User } from '../../types';
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authApi } from '../../app/services/auth';
 import { RootState } from '../../app/store';
 
@@ -17,7 +17,15 @@ const slice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logout: () => initialState
+        logout: () => initialState,
+        updateUserInfo(state, action: PayloadAction<{name: string, email: string}>) {
+            if (state.user) {
+                state.user.name = action.payload.name;
+                state.user.email = action.payload.email;
+                state.isAuthenticated = true;
+            }
+
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -33,10 +41,14 @@ const slice = createSlice({
                 state.user = action.payload;
                 state.isAuthenticated = true;
             })
+            .addMatcher(authApi.endpoints.updateUserInfo.matchFulfilled, (state, action) => {
+                state.user = action.payload;
+                state.isAuthenticated = true;
+            })
     }
 });
 
-export const { logout } = slice.actions;
+export const { logout, updateUserInfo } = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;

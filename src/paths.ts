@@ -4,6 +4,7 @@ export const Paths = {
     good: '/good',
     register: '/register',
     login: '/login',
+    editUser: '/user/edit',
     updateInfo: '/update-info',
     updatePassword: '/update-password',
     user: '/user'

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     color: black;
-    background-color: transparent;
+    background-color: rgb(240, 240, 240);
 }
 .logo {
     font-size: 33px;

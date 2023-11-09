@@ -43,6 +43,7 @@ export const Register = () => {
                         <CustomInput type="name" name="name" placeholder="Имя" />
                         <CustomInput type="email" name="email" placeholder="Email" />
                         <PasswordInput name="password" placeholder="Пароль" />
+                        <PasswordInput name="confirmPassword" placeholder="Повторите пароль" />
                         <CustomButton type="primary" htmlType="submit">
                             Зарегистрироваться
                         </CustomButton>
