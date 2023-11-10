@@ -43,10 +43,10 @@ export const Layout: React.FC<Props> = ({ children }) => {
                             key: item.key,
                             label: item.lable,
                         }))}
-                        style={{ height: "100%", borderRight: 0 }}
+                        style={{ minHeight: "100%", borderRight: 0 }}
                     />
                 </Sider>
-                <AntLayout.Content style={{ height: "90vh" }}>
+                <AntLayout.Content style={{ minHeight: "90vh" }}>
                     {children}
                 </AntLayout.Content>
             </AntLayout>

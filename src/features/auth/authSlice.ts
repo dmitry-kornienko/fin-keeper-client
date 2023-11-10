@@ -24,7 +24,6 @@ const slice = createSlice({
                 state.user.email = action.payload.email;
                 state.isAuthenticated = true;
             }
-
         }
     },
     extraReducers: (builder) => {

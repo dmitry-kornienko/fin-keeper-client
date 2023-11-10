@@ -27,6 +27,13 @@ export const authApi = api.injectEndpoints({
                 body: data
             })
         }),
+        updateUserPassword: builder.mutation<void, {_id: string, currentPassword: string, newPassword: string}>({
+            query: (data) => ({
+                url: `/user/update-password/${data._id}`,
+                method: 'PATCH',
+                body: data
+            })
+        }),
         current: builder.query<ResponsLoginData, void>({
             query: () => ({
                 url: '/user/current',
@@ -36,6 +43,6 @@ export const authApi = api.injectEndpoints({
     })
 });
 
-export const { useLoginMutation, useRegisterMutation, useCurrentQuery, useUpdateUserInfoMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useCurrentQuery, useUpdateUserInfoMutation, useUpdateUserPasswordMutation } = authApi;
 
-export const { endpoints: { login, register, current, updateUserInfo } } = authApi;
+export const { endpoints: { login, register, current, updateUserInfo, updateUserPassword } } = authApi;

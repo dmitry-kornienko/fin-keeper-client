@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html, body, body > div {
+  min-height: 100%;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: rgb(240, 240, 240);

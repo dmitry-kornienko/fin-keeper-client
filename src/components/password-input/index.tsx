@@ -5,18 +5,20 @@ type Props = {
     name: string;
     placeholder: string;
     dependencies?: NamePath[];
+    hasFeedback?: boolean
 };
 
 export const PasswordInput: React.FC<Props> = ({
     name,
     placeholder,
     dependencies,
+    hasFeedback,
 }) => {
     return (
         <Form.Item
             name={name}
             dependencies={dependencies}
-            hasFeedback
+            hasFeedback={hasFeedback}
             rules={[
                 {
                     required: true,

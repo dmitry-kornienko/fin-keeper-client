@@ -11,44 +11,67 @@ import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { ErrorMessage } from "../../components/error-message";
 
 export const Login = () => {
-
     const navigate = useNavigate();
 
-  const [loginUser] = useLoginMutation();
-  const [ error, setError ] = useState('');
+    const [loginUser] = useLoginMutation();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-  const login = async (data: UserData) => {
-    try {
-      await loginUser(data).unwrap();
+    const login = async (data: UserData) => {
+        try {
+            setLoading(true);
+            await loginUser(data).unwrap();
 
-      navigate(Paths.weekReport);
-    } catch (err) {
-      const maybeError = isErrorWithMessage(err);
+            setLoading(false);
+            navigate(Paths.weekReport);
+        } catch (err) {
+            setLoading(false);
+            const maybeError = isErrorWithMessage(err);
 
-      if (maybeError) {
-        setError(err.data.message);
-      } else {
-        setError('Неизвестная ошибка');
-      }
-    }
-  }
+            if (maybeError) {
+                setError(err.data.message);
+            } else {
+                setError("Неизвестная ошибка");
+            }
+        }
+    };
 
     return (
         <Layout>
             <Row align="middle" justify="center">
-                <Card title="Войдите" style={{ width: "30rem", marginTop: '30px' }}>
-                    <Form onFinish={ login }>
-                        <CustomInput type="email" name="email" placeholder="Email" />
-                        <PasswordInput name="password" placeholder="Пароль" />
-                        <CustomButton type="primary" htmlType="submit">
+                <Card
+                    title="Войдите"
+                    style={{ width: "30rem", marginTop: "30px" }}
+                >
+                    <Form onFinish={login}>
+                        <CustomInput
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                        />
+                        <PasswordInput
+                            name="password"
+                            placeholder="Пароль"
+                            hasFeedback
+                        />
+                        <CustomButton
+                            type="primary"
+                            htmlType="submit"
+                            loading={loading}
+                        >
                             Войти
                         </CustomButton>
                     </Form>
-                    <Space direction="vertical" size='small' style={{ marginTop: '20px' }}>
+                    <Space
+                        direction="vertical"
+                        size="small"
+                        style={{ marginTop: "20px" }}
+                    >
                         <Typography.Text>
-                            Нет аккаунта? <Link to={Paths.register}>Зарегистрируйтесь</Link>
+                            Нет аккаунта?{" "}
+                            <Link to={Paths.register}>Зарегистрируйтесь</Link>
                         </Typography.Text>
-                        <ErrorMessage message={ error } />
+                        <ErrorMessage message={error} />
                     </Space>
                 </Card>
             </Row>
