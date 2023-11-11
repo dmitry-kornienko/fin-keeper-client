@@ -6,6 +6,7 @@ import { Home } from "./pages/home";
 import { WeekReportsPage } from "./pages/week-report";
 import { GoodPage } from "./pages/good";
 import { EditUser } from "./pages/edit-user";
+import { AddSupplier } from "./pages/add-supplier";
 
 function App() {
     return (
@@ -15,6 +16,10 @@ function App() {
             <Route path={ Paths.login } element={ <Login /> } />
             <Route path={ Paths.register } element={ <Register /> } />
             <Route path={ `${Paths.editUser}/:id` } element={ <EditUser /> } />
+
+            <Route path={ Paths.supplierAdd } element={ <AddSupplier /> } />
+
+
 
             <Route path={ Paths.weekReport } element={ <WeekReportsPage /> } />
             <Route path={ Paths.good } element={ <GoodPage /> } />

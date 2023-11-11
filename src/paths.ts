@@ -1,11 +1,16 @@
 export const Paths = {
     home: '/',
-    weekReport: '/week-report',
-    good: '/good',
-    register: '/register',
+
     login: '/login',
+    user: '/user',
+    register: '/register',
     editUser: '/user/edit',
     updateInfo: '/update-info',
     updatePassword: '/update-password',
-    user: '/user'
+
+    supplier: "/supplier",
+    supplierAdd: "/supplier/add",
+
+    weekReport: '/week-report',
+    good: '/good',
 } as const;

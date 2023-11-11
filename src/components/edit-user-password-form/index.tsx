@@ -1,8 +1,8 @@
-import { Card, Form, Space } from "antd";
+import { Card, Form, FormInstance, Space, message } from "antd";
 import { CustomButton } from "../custom-button";
 import { ErrorMessage } from "../error-message";
 import { PasswordInput } from "../password-input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useUpdateUserPasswordMutation } from "../../app/services/auth";
 import { selectUser } from "../../features/auth/authSlice";
@@ -14,12 +14,29 @@ export const UserEditPasswordForm: React.FC = () => {
     const [errorPassword, setErrorPassword] = useState("");
     const [passwordBtnLoading, setPasswordBtnLoading] = useState(false);
     const [editUserPassword] = useUpdateUserPasswordMutation();
+    const formRef = useRef<FormInstance>(null);
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const success = () => {
+        messageApi.open({
+            type: "success",
+            content: "Пароль изменен",
+        });
+    };
+
+    const errorMessage = () => {
+        messageApi.open({
+            type: "error",
+            content: "Не удалось изменить пароль",
+        });
+    };
 
     const handleEditPassword = async (data: {
         currentPassword: string;
         password: string;
     }) => {
         try {
+            setErrorPassword("");
             setPasswordBtnLoading(true);
             if (user) {
                 await editUserPassword({
@@ -29,8 +46,11 @@ export const UserEditPasswordForm: React.FC = () => {
                 }).unwrap();
             }
             setPasswordBtnLoading(false);
+            success();
+            formRef.current?.resetFields();
         } catch (error) {
             const maybeError = isErrorWithMessage(error);
+            errorMessage();
 
             if (maybeError) {
                 setErrorPassword(error.data.message);
@@ -43,35 +63,42 @@ export const UserEditPasswordForm: React.FC = () => {
     };
 
     return (
-        <Card title="Изменение пароля" className={styles.card}>
-            {user && (
-                <Form name="edit-user-password" onFinish={handleEditPassword}>
-                    <PasswordInput
-                        name="currentPassword"
-                        placeholder="Текущий пароль"
-                    />
-                    <PasswordInput
-                        name="password"
-                        placeholder="Новый пароль"
-                        hasFeedback
-                    />
-                    <PasswordInput
-                        name="confirmPassword"
-                        dependencies={["newPassword"]}
-                        placeholder="Повторите пароль"
-                        hasFeedback
-                    />
-                    <Space>
-                        <CustomButton
-                            htmlType="submit"
-                            loading={passwordBtnLoading}
-                        >
-                            Сохранить
-                        </CustomButton>
-                        <ErrorMessage message={errorPassword} />
-                    </Space>
-                </Form>
-            )}
-        </Card>
+        <>
+            {contextHolder}
+            <Card title="Изменение пароля" className={styles.card}>
+                {user && (
+                    <Form
+                        name="edit-user-password"
+                        onFinish={handleEditPassword}
+                        ref={formRef}
+                    >
+                        <PasswordInput
+                            name="currentPassword"
+                            placeholder="Текущий пароль"
+                        />
+                        <PasswordInput
+                            name="password"
+                            placeholder="Новый пароль"
+                            hasFeedback
+                        />
+                        <PasswordInput
+                            name="confirmPassword"
+                            dependencies={["newPassword"]}
+                            placeholder="Повторите пароль"
+                            hasFeedback
+                        />
+                        <Space>
+                            <CustomButton
+                                htmlType="submit"
+                                loading={passwordBtnLoading}
+                            >
+                                Сохранить
+                            </CustomButton>
+                            <ErrorMessage message={errorPassword} />
+                        </Space>
+                    </Form>
+                )}
+            </Card>
+        </>
     );
 };

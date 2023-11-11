@@ -16,5 +16,15 @@ export type User = {
 }
 
 export type Supplier = {
-    
+    _id: string,
+    name: string,
+    tax_rate: number,
+    tax_from: string,
+    user: User,
+    token_stat: string,
+    reports: Report[]
+}
+
+export type Report = {
+    _id: string
 }

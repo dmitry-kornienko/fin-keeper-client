@@ -25,7 +25,7 @@ export const Header = () => {
             <CustomButton type="text" onClick={ () => navigate(`${Paths.editUser}/${user?._id}`) }>
                 Пользователь
             </CustomButton>
-            <CustomButton type="text" >
+            <CustomButton type="text">
                 Поставщик
             </CustomButton>
         </div>
@@ -43,7 +43,7 @@ export const Header = () => {
                 ]}
             />
             <Divider style={{ margin: "10px 0" }} />
-            <CustomButton type="primary">
+            <CustomButton type="primary" onClick={ () => navigate(Paths.supplierAdd) }>
                 Добавить нового
             </CustomButton>
         </>
