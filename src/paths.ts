@@ -10,6 +10,7 @@ export const Paths = {
 
     supplier: "/supplier",
     supplierAdd: "/supplier/add",
+    supplierEditInfo: "/supplier/update-info",
 
     weekReport: '/week-report',
     good: '/good',

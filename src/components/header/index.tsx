@@ -6,41 +6,54 @@ import { selectUser, logout } from "../../features/auth/authSlice";
 import { SettingOutlined, LogoutOutlined, LoginOutlined, ShopOutlined, UserAddOutlined } from "@ant-design/icons";
 import { CustomButton } from "../custom-button";
 import styles from "./index.module.css";
+import { clearSuppliers, selectSuppliers } from "../../features/suppliers/suppliersSlice";
+import { useChangeActiveSupplierMutation } from "../../app/services/supplier";
 
 export const Header = () => {
 
     const user = useSelector(selectUser);
+    const suppliers = useSelector(selectSuppliers);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const [changeActiveSupplier] = useChangeActiveSupplierMutation();
+
+    const currentSupplier = suppliers?.suppliers?.find(i => i.is_active === true);
+    
     const onLogoutClick = () => {
         dispatch(logout());
-        localStorage.removeItem('token');
+        dispatch(clearSuppliers());
+        localStorage.removeItem("token");
         navigate('/login');
     }
-
+    
     const userPopover = (
         <div>
             <p className={ styles.populate__header }>Управление аккаунтом</p>
             <CustomButton type="text" onClick={ () => navigate(`${Paths.editUser}/${user?._id}`) }>
                 Пользователь
             </CustomButton>
-            <CustomButton type="text">
+            <CustomButton type="text" onClick={ () => navigate(`${Paths.supplierEditInfo}/${currentSupplier?._id}`)}>
                 Поставщик
             </CustomButton>
         </div>
     );
+
+    const changeSupplier = async (e: string) => {
+        window.location.reload();
+        await changeActiveSupplier(e);
+    }
     const supplierPopover = (
         <>
             <Typography>Выберите поставщика</Typography>
             <Select
-                defaultValue="ИП Иванов"
+                defaultValue={currentSupplier?.name}
                 style={{ width: 150 }}
                 // loading
-                options={[
-                    { value: 'ИП Иванов', label: 'ИП Иванов' },
-                    { value: 'ИП Сверидов', label: 'ИП Сверидов' },
-                ]}
+                options={suppliers?.suppliers?.map(item => (
+                    {value: item._id, label: item.name}
+                ))}
+                onChange={changeSupplier}
             />
             <Divider style={{ margin: "10px 0" }} />
             <CustomButton type="primary" onClick={ () => navigate(Paths.supplierAdd) }>
@@ -62,7 +75,11 @@ export const Header = () => {
                         <Space>
                             <Popover content={supplierPopover} trigger='click'>
                                 <CustomButton type="default" icon={ <ShopOutlined /> }>
-                                    ИП Иванов
+                                    { currentSupplier ? currentSupplier.name
+                                        :
+                                        <CustomButton type="primary" onClick={ () => navigate(Paths.supplierAdd) }>
+                                            Добавить нового
+                                        </CustomButton> }
                                  </CustomButton>
                             </Popover>
                             <Popover content={userPopover} trigger="click">

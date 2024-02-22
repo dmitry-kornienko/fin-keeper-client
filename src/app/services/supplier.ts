@@ -12,11 +12,37 @@ type RequestData = {
 
 export const supplierApi = api.injectEndpoints({
     endpoints: (builder) => ({
+        supplier: builder.query<Supplier, string>({
+            query: (id) => ({
+                url: `/supplier/${id}`,
+                method: 'GET',
+            })
+        }),
+        suppliersCurrentUser: builder.query<Supplier[], void>({
+            query: () => ({
+                url: "/supplier",
+                method: 'GET',
+            })
+        }),
         addSupplier: builder.mutation<Supplier, RequestData>({
             query: (supplier) => ({
                 url: '/supplier/add',
                 method: 'POST',
                 body: supplier
+            })
+        }),
+        updateSupplierInfo: builder.mutation<Supplier, { _id: string, name: string, tax_rate: number, tax_from: string, token_stat: string }>({
+            query: (data) => ({
+                url: `/supplier/edit/${data._id}`,
+                method: 'PATCH',
+                body: data
+            })
+        }),
+        changeActiveSupplier: builder.mutation<string, string>({
+            query: (id) => ({
+                url: `/supplier/change-active-supplier/${id}`,
+                method: 'PATCH',
+                body: id
             })
         }),
         // register: builder.mutation<ResponsLoginData, UserData>({
@@ -26,13 +52,6 @@ export const supplierApi = api.injectEndpoints({
         //         body: UserData
         //     })
         // }),
-        // updateUserInfo: builder.mutation<ResponsLoginData, Pick<User, '_id' | 'name' | 'email'>>({
-        //     query: (data) => ({
-        //         url: `/user/update-info/${data._id}`,
-        //         method: 'PATCH',
-        //         body: data
-        //     })
-        // }),
         // updateUserPassword: builder.mutation<void, {_id: string, currentPassword: string, newPassword: string}>({
         //     query: (data) => ({
         //         url: `/user/update-password/${data._id}`,
@@ -40,15 +59,9 @@ export const supplierApi = api.injectEndpoints({
         //         body: data
         //     })
         // }),
-        // current: builder.query<ResponsLoginData, void>({
-        //     query: () => ({
-        //         url: '/user/current',
-        //         method: 'GET',
-        //     })
-        // }),
     })
 });
 
-export const { useAddSupplierMutation } = supplierApi;
+export const { useSupplierQuery, useAddSupplierMutation, useUpdateSupplierInfoMutation, useSuppliersCurrentUserQuery, useChangeActiveSupplierMutation } = supplierApi;
 
-export const { endpoints: { addSupplier } } = supplierApi;
+export const { endpoints: { supplier, addSupplier, updateSupplierInfo, suppliersCurrentUser, changeActiveSupplier } } = supplierApi;

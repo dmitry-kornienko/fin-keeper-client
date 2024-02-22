@@ -20,6 +20,7 @@ export type Supplier = {
     name: string,
     tax_rate: number,
     tax_from: string,
+    is_active: boolean,
     user: User,
     token_stat: string,
     reports: Report[]

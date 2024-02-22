@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { CustomInput } from "../custom-input";
 import { CustomButton } from "../custom-button";
 import { ErrorMessage } from "../error-message";
-import styles from "./index.module.css"
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
 import { useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import { selectUser } from "../../features/auth/authSlice";
 import { useAddSupplierMutation } from "../../app/services/supplier";
 import { Supplier } from "../../types";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
+import styles from "./index.module.css"
 
 export const SupplierAddForm = () => {
 
@@ -43,11 +43,12 @@ export const SupplierAddForm = () => {
                     tax_from: data.tax_from,
                     token_stat: data.token_stat,
                 }
-                console.log(dataForNewSupplier)
-                await addSupplier({ userId: user._id, ...dataForNewSupplier })
+                await addSupplier({ userId: user._id, ...dataForNewSupplier }).unwrap();
             }
 
             setLoading(false);
+            navigate(Paths.weekReport)
+            window.location.reload();
         } catch (error) {
             setLoading(false);
 
