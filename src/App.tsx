@@ -21,8 +21,6 @@ function App() {
             <Route path={ Paths.supplierAdd } element={ <AddSupplier /> } />
             <Route path={ `${Paths.supplierEditInfo}/:id` } element={ <EditSupplier /> } />
 
-
-
             <Route path={ Paths.weekReport } element={ <WeekReportsPage /> } />
             <Route path={ Paths.good } element={ <GoodPage /> } />
         </Routes>
