@@ -20,7 +20,7 @@ export const authApi = api.injectEndpoints({
                 body: UserData
             })
         }),
-        updateUserInfo: builder.mutation<ResponsLoginData, Pick<User, '_id' | 'name' | 'email'>>({
+        updateUserInfo: builder.mutation<ResponsLoginData, Pick<User, '_id' | 'name' | 'email' | 'tokenWB'>>({
             query: (data) => ({
                 url: `/user/update-info/${data._id}`,
                 method: 'PATCH',

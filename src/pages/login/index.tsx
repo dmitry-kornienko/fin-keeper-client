@@ -9,12 +9,9 @@ import { useState } from "react";
 import { useLoginMutation, UserData } from "../../app/services/auth";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { ErrorMessage } from "../../components/error-message";
-import { useAppDispatch } from "../../app/hooks";
-import { setSuppliers } from "../../features/suppliers/suppliersSlice";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
 
     const [loginUser] = useLoginMutation();
     const [error, setError] = useState("");
@@ -23,9 +20,8 @@ export const Login = () => {
     const login = async (data: UserData) => {
         try {
             setLoading(true);
-            const user = await loginUser(data).unwrap();
+            await loginUser(data).unwrap();
 
-            dispatch(setSuppliers(user.suppliers));
             setLoading(false);
             navigate(Paths.weekReport);
         } catch (err) {

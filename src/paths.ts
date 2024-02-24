@@ -8,10 +8,8 @@ export const Paths = {
     updateInfo: '/update-info',
     updatePassword: '/update-password',
 
-    supplier: "/supplier",
-    supplierAdd: "/supplier/add",
-    supplierEditInfo: "/supplier/update-info",
-
-    weekReport: '/week-report',
+    weekReport: '/report',
     good: '/good',
+
+    report: '/report',
 } as const;

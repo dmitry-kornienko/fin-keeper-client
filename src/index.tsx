@@ -6,8 +6,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
-import "./index.css";
 import { Auth } from "./features/auth/auth";
+import "./index.css";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

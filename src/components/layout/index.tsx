@@ -13,7 +13,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
     const menuProps = [
         {
             lable: "Еженедельные отчеты",
-            key: "week-report",
+            key: "report",
         },
         {
             lable: "Товары",
@@ -22,7 +22,10 @@ export const Layout: React.FC<Props> = ({ children }) => {
     ];
     const { pathname } = useLocation();
 
-    const [current, setCurrent] = useState(`${pathname.slice(1)}`);
+    const pathSegments = pathname.split('/');
+    const currentKey = pathSegments.length > 1 ? pathSegments[1] : pathSegments[0];
+
+    const [current, setCurrent] = useState(currentKey);
     const navigate = useNavigate();
 
     const onClick: MenuProps["onClick"] = (e) => {
@@ -46,7 +49,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                         style={{ minHeight: "100%", borderRight: 0 }}
                     />
                 </Sider>
-                <AntLayout.Content style={{ minHeight: "90vh" }}>
+                <AntLayout.Content style={{ minHeight: "90vh", paddingLeft: "20px", paddingTop: "10px" }}>
                     {children}
                 </AntLayout.Content>
             </AntLayout>

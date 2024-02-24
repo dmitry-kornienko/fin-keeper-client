@@ -52,6 +52,11 @@ export const Register = () => {
                             name="email"
                             placeholder="Email"
                         />
+                        <CustomInput
+                            type="tokenWB"
+                            name="tokenWB"
+                            placeholder="Токен статистики"
+                        />
                         <PasswordInput
                             name="password"
                             placeholder="Пароль"

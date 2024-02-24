@@ -1,4 +1,4 @@
-import { Card, Form, FormInstance, Space, message } from "antd";
+import { Card, Divider, Form, FormInstance, Space, message } from "antd";
 import { CustomButton } from "../custom-button";
 import { ErrorMessage } from "../error-message";
 import { PasswordInput } from "../password-input";
@@ -98,6 +98,7 @@ export const UserEditPasswordForm: React.FC = () => {
                         </Space>
                     </Form>
                 )}
+                <Divider />
             </Card>
         </>
     );

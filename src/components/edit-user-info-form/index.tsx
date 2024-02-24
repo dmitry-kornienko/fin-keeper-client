@@ -32,7 +32,7 @@ export const UserEditInfoForm: React.FC = () => {
         });
     };
 
-    const handleEditInfo = async (value: { name: string; email: string }) => {
+    const handleEditInfo = async (value: { name: string; email: string, tokenWB: string }) => {
         try {
             setInfoBtnLoading(true);
 
@@ -41,6 +41,7 @@ export const UserEditInfoForm: React.FC = () => {
                     _id: user._id,
                     name: value.name,
                     email: value.email,
+                    tokenWB: value.tokenWB
                 }).unwrap();
                 dispatch(updateUserInfo(value));
             }
@@ -85,6 +86,12 @@ export const UserEditInfoForm: React.FC = () => {
                             name="email"
                             type="email"
                             placeholder="Email"
+                            />
+                        <label>Токен статистики</label>
+                        <CustomInput
+                            name="tokenWB"
+                            type="tokenWB"
+                            placeholder="Токен статистики"
                         />
                         <Space>
                             <ErrorMessage message={errorInfo} />

@@ -3,8 +3,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 20px;
     color: black;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(231, 231, 231);
 }
 .logo {
     font-size: 33px;
