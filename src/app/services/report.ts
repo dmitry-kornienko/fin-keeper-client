@@ -36,9 +36,16 @@ export const reportApi = api.injectEndpoints({
                 body: data
             })
         }),
+        editCostPrice: builder.mutation<void, { id: string, composition: { article: string, cost_price: number }[] }>({
+            query: (data) => ({
+                url: `/report/update-cost-price/${data.id}`,
+                method: 'PATCH',
+                body: data.composition
+            })
+        }),
     })
 });
 
-export const { useGetAllReportsQuery, useAddReportMutation, useGetReportQuery, useRemoveReportMutation, useEditAdditionalParametersReportMutation } = reportApi;
+export const { useGetAllReportsQuery, useAddReportMutation, useGetReportQuery, useRemoveReportMutation, useEditAdditionalParametersReportMutation, useEditCostPriceMutation } = reportApi;
 
-export const { endpoints: { getAllReports, getReport, addReport, removeReport, editAdditionalParametersReport } } = reportApi;
+export const { endpoints: { getAllReports, getReport, addReport, removeReport, editAdditionalParametersReport, editCostPrice } } = reportApi;
