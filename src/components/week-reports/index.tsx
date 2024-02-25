@@ -66,7 +66,7 @@ export const WeekReports = () => {
             title: "К оплате",
             dataIndex: "total_payment",
             render: (_, record) => (
-                <div>{addSpacesToNumberWithDecimal(record.total_payment)}</div>
+                <div>{addSpacesToNumberWithDecimal(record.ppvz_for_pay - record.delivery_sum - record.penalty - record.additional_payment - record.storage - record.taking_payment - record.other_deductions)}</div>
             ),
             key: "total_payment",
         },

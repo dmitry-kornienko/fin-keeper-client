@@ -81,8 +81,6 @@ export type Report = {
 
     other_deductions: number, // Прочие удержания (39)
 
-    total_payment: number, // Итого к оплате (40)
-
     cost_price_sum: number, // Себестоимость товара (41)
     cost_price_precent: number, // % Себестоимости (42)
 

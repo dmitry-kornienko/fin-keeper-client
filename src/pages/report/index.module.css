@@ -1,3 +1,11 @@
-.report {
-    /* padding: 0 20px; */
+.editBtn {
+    padding: 3px;
+    border-radius: 5px;
+}
+.editBtn:hover {
+    cursor: pointer;
+    background-color: #d3d3d3;
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+    font-size: 16px;
 }

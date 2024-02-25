@@ -22,9 +22,23 @@ export const reportApi = api.injectEndpoints({
                 body: data
             })
         }),
+        removeReport: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/report/remove/${id}`,
+                method: 'DELETE',
+                // body: data
+            })
+        }),
+        editAdditionalParametersReport: builder.mutation<Report, { id: string, storage: number, taking_payment: number, other_deductions: number }>({
+            query: (data) => ({
+                url: `/report/update-additional-parameters/${data.id}`,
+                method: 'PATCH',
+                body: data
+            })
+        }),
     })
 });
 
-export const { useGetAllReportsQuery, useAddReportMutation, useGetReportQuery } = reportApi;
+export const { useGetAllReportsQuery, useAddReportMutation, useGetReportQuery, useRemoveReportMutation, useEditAdditionalParametersReportMutation } = reportApi;
 
-export const { endpoints: { getAllReports, getReport, addReport } } = reportApi;
+export const { endpoints: { getAllReports, getReport, addReport, removeReport, editAdditionalParametersReport } } = reportApi;
