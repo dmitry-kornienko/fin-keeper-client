@@ -12,5 +12,15 @@
 .editCostPriceBtn:hover {
     cursor: pointer;
     background-color: #d3d3d3;
-
+}
+.iconTooltip {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.iconTooltip:hover {
+    cursor: pointer;
+}
+  
+.iconTooltipContainer:hover .iconTooltip {
+    opacity: 1;
 }

@@ -1,7 +1,10 @@
+import { Goods } from "../../components/goods";
 import { Layout } from "../../components/layout";
 
 export const GoodPage = () => {
     return (
-        <Layout>Good Page</Layout>
+        <Layout>
+            <Goods />
+        </Layout>
     );
 };

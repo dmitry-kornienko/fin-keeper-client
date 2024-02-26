@@ -108,3 +108,9 @@ export type Report = {
         delivery: number, // Логистика        
     }[]
 }
+
+export type Good = {
+    _id: string,
+    article: string,
+    cost_price: number
+}

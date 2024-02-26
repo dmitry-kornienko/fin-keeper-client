@@ -25,18 +25,24 @@ import { CustomInput } from "../../components/custom-input";
 import { Paths } from "../../paths";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import styles from "./index.module.css";
+import { Report as ReportType } from "../../types";
 
 export const Report = () => {
     const params = useParams<{ id: string }>();
     const { data, isLoading } = useGetReportQuery(params.id || "");
     const [removeReport] = useRemoveReportMutation();
-    const [ editAdditionalParameters, { isLoading: isEditAdditionalParametersLoading } ] = useEditAdditionalParametersReportMutation();
-    const [editCostPrice, { isLoading: isEditCostPriceLoading }] = useEditCostPriceMutation();
+    const [
+        editAdditionalParameters,
+        { isLoading: isEditAdditionalParametersLoading },
+    ] = useEditAdditionalParametersReportMutation();
+    const [editCostPrice, { isLoading: isEditCostPriceLoading }] =
+        useEditCostPriceMutation();
 
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [isEditCostPriceModalOpen, setIsEditCostPriceModalOpen] = useState(false);
+    const [isEditCostPriceModalOpen, setIsEditCostPriceModalOpen] =
+        useState(false);
     const [error, setError] = useState("");
 
     const showModal = () => {
@@ -57,6 +63,14 @@ export const Report = () => {
     };
     const hideEditCostPriceModal = () => {
         setIsEditCostPriceModalOpen(false);
+    };
+
+    const getCostPriceOfReport = (report: ReportType): number => {
+        const sum = report.composition.reduce(
+            (sum, el) => sum + el.cost_price * el.sale_count,
+            0
+        );
+        return sum;
     };
 
     const tableColumns: ColumnsType<{
@@ -85,7 +99,16 @@ export const Report = () => {
                 </Space>
             ),
             dataIndex: "cost_price",
-            key: "cost_price",
+            render: (_, record) => (
+                <Space className={styles.iconTooltipContainer}>
+                    <span>{record.cost_price}</span>
+                    <EditOutlined
+                        onClick={showEditCostPriceModal}
+                        className={styles.iconTooltip}
+                    />
+                </Space>
+            ),
+            key: "cost_price,",
         },
         {
             title: "Продажи, шт",
@@ -258,7 +281,11 @@ export const Report = () => {
                                 : ""}
                         </Descriptions.Item>
                         <Descriptions.Item label="Себестоимость товара">
-                            В разработке
+                            {data
+                                ? addSpacesToNumberWithDecimal(
+                                      getCostPriceOfReport(data)
+                                  )
+                                : ""}
                         </Descriptions.Item>
                         <Descriptions.Item label="Штрафы">
                             {data?.penalty}
@@ -304,10 +331,36 @@ export const Report = () => {
                                 : ""}
                         </Descriptions.Item>
                         <Descriptions.Item label="Доход">
-                            В разработке
+                            {data
+                                ? addSpacesToNumberWithDecimal(
+                                      data.ppvz_for_pay -
+                                          data.delivery_sum -
+                                          data.penalty -
+                                          data.additional_payment -
+                                          data.storage -
+                                          data.taking_payment -
+                                          data.other_deductions -
+                                          getCostPriceOfReport(data) -
+                                          data.tax_sum
+                                  )
+                                : ""}
                         </Descriptions.Item>
                         <Descriptions.Item label="Рентабельность">
-                            В разработке
+                            {data
+                                ? `${(
+                                      ((data.ppvz_for_pay -
+                                          data.delivery_sum -
+                                          data.penalty -
+                                          data.additional_payment -
+                                          data.storage -
+                                          data.taking_payment -
+                                          data.other_deductions -
+                                          getCostPriceOfReport(data) -
+                                          data.tax_sum) /
+                                          getCostPriceOfReport(data)) *
+                                      100
+                                  ).toFixed(2)} %`
+                                : ""}
                         </Descriptions.Item>
                     </Descriptions>
                     <Table

@@ -20,8 +20,8 @@ function App() {
             <Route path={ Paths.weekReport } element={ <WeekReportsPage /> } />
             <Route path={ Paths.good } element={ <GoodPage /> } />
 
-            
             <Route path={ `${Paths.report}/:id` } element={ <Report /> } />
+            {/* <Route path={ `${Paths.good}/:id` } element={ <Good /> } /> */}
         </Routes>
     )
 }
