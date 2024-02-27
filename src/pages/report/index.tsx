@@ -7,7 +7,7 @@ import {
 } from "../../app/services/report";
 import { Loader } from "../../components/loader";
 import { Layout } from "../../components/layout";
-import { Descriptions, Divider, Form, Input, Modal, Space, Table } from "antd";
+import { Descriptions, Divider, Form, Input, Modal, Space, Table, message } from "antd";
 import {
     LeftOutlined,
     EditOutlined,
@@ -24,12 +24,16 @@ import { getDate } from "../../utils/get-date-format";
 import { CustomInput } from "../../components/custom-input";
 import { Paths } from "../../paths";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
-import styles from "./index.module.css";
 import { Report as ReportType } from "../../types";
+import styles from "./index.module.css";
 
 export const Report = () => {
     const params = useParams<{ id: string }>();
-    const { data, isLoading } = useGetReportQuery(params.id || "");
+    const {
+        data,
+        isLoading,
+        refetch: refetchGetReport,
+    } = useGetReportQuery(params.id || "");
     const [removeReport] = useRemoveReportMutation();
     const [
         editAdditionalParameters,
@@ -164,6 +168,36 @@ export const Report = () => {
         },
     ];
 
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const successEditCostPrice = () => {
+      messageApi.open({
+        type: 'success',
+        content: 'Себестоимость обнавлена',
+      });
+    };
+  
+    const errorEditCostPrice = () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Ошибка зименения себестоимости',
+      });
+    };
+    
+    const successEditAdditionalParams = () => {
+      messageApi.open({
+        type: 'success',
+        content: 'Новые значения сохранены',
+      });
+    };
+  
+    const errorEditAdditionalParams = () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Не удалось изменить параметры',
+      });
+    };
+
     const handleDeleteReport = async () => {
         try {
             if (data) {
@@ -194,11 +228,13 @@ export const Report = () => {
                     storage: Number(parametrs.storage),
                     other_deductions: Number(parametrs.other_deductions),
                     taking_payment: Number(parametrs.taking_payment),
-                });
-                window.location.reload();
+                }).unwrap();
+                await refetchGetReport();
+                successEditAdditionalParams();
+                hideEditModal();
             }
-            hideEditModal();
         } catch {
+            errorEditAdditionalParams();
             const maybeError = isErrorWithMessage(error);
 
             if (maybeError) {
@@ -224,10 +260,12 @@ export const Report = () => {
                     cost_price: Number(i.cost_price),
                 }));
                 await editCostPrice({ id: data._id, composition: arrForDB });
-                window.location.reload();
+                refetchGetReport();
+                successEditCostPrice();
                 hideEditCostPriceModal();
             }
         } catch (error) {
+            errorEditCostPrice();
             const maybeError = isErrorWithMessage(error);
 
             if (maybeError) {
@@ -240,6 +278,7 @@ export const Report = () => {
 
     return (
         <Layout>
+            {contextHolder}
             {isLoading ? (
                 <Loader />
             ) : (

@@ -1,5 +1,8 @@
-import { useGetAllGoodsQuery, useUpdateAllGoodsMutation } from "../../app/services/good";
-import { Form, Input, Modal, Space, Table } from "antd";
+import {
+    useGetAllGoodsQuery,
+    useUpdateAllGoodsMutation,
+} from "../../app/services/good";
+import { Form, Input, Modal, Space, Table, message } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { Good } from "../../types";
 import { FormOutlined } from "@ant-design/icons";
@@ -11,19 +14,35 @@ import styles from "./index.module.css";
 
 type DataForEditCostPrice = {
     goods: {
-        _id: string,
+        _id: string;
         article: string;
         cost_price: number;
     }[];
 };
 
 export const Goods = () => {
-    const { data, isLoading } = useGetAllGoodsQuery();
-    const [updateAllGoods, { isLoading: isLoadingEditCostPrice }] = useUpdateAllGoodsMutation();
+    const { data, isLoading, refetch } = useGetAllGoodsQuery();
+    const [updateAllGoods, { isLoading: isLoadingEditCostPrice }] =
+        useUpdateAllGoodsMutation();
 
     const [isEditCostPriceModalOpen, setIsEditCostPriceModalOpen] =
         useState(false);
     const [error, setError] = useState("");
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const success = () => {
+      messageApi.open({
+        type: 'success',
+        content: 'Себестоимость товаров обнавлена',
+      });
+    };
+  
+    const errorReq = () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Не удалось изменить себестоимость',
+      });
+    };
 
     const showEditCostPriceModal = () => {
         setIsEditCostPriceModalOpen(true);
@@ -35,8 +54,6 @@ export const Goods = () => {
 
     const handleEditCostPrice = async (dataForm: DataForEditCostPrice) => {
         try {
-            console.log(dataForm.goods)
-
             const arrForDB = dataForm.goods.map((i) => ({
                 id: i._id,
                 article: i.article,
@@ -44,10 +61,11 @@ export const Goods = () => {
             }));
 
             await updateAllGoods(arrForDB);
-            window.location.reload();
+            refetch();
             hideEditCostPriceModal();
-
+            success();
         } catch (error) {
+            errorReq();
             const maybeError = isErrorWithMessage(error);
 
             if (maybeError) {
@@ -87,6 +105,7 @@ export const Goods = () => {
 
     return (
         <>
+            {contextHolder}
             <Table
                 dataSource={data}
                 loading={isLoading}

@@ -13,3 +13,7 @@
     padding: 3px;
     border-radius: 5px;
 }
+.editCostPriceBtn:hover {
+    cursor: pointer;
+    background-color: #d3d3d3;
+}

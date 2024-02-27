@@ -15,7 +15,7 @@ export const reportApi = api.injectEndpoints({
                 method: 'GET',
             })
         }),
-        addReport: builder.mutation<Report, Report>({
+        addReport: builder.mutation<Report, {dateFrom: string, dateTo: string}>({
             query: (data) => ({
                 url: `/report/add`,
                 method: 'POST',
@@ -26,7 +26,6 @@ export const reportApi = api.injectEndpoints({
             query: (id) => ({
                 url: `/report/remove/${id}`,
                 method: 'DELETE',
-                // body: data
             })
         }),
         editAdditionalParametersReport: builder.mutation<Report, { id: string, storage: number, taking_payment: number, other_deductions: number }>({

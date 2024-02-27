@@ -2,6 +2,7 @@ import { User } from '../../types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authApi } from '../../app/services/auth';
 import { RootState } from '../../app/store';
+import { reportApi } from '../../app/services/report';
 
 interface InitialState {
     user: User & { token: string } | null,
@@ -43,6 +44,11 @@ const slice = createSlice({
             .addMatcher(authApi.endpoints.updateUserInfo.matchFulfilled, (state, action) => {
                 state.user = action.payload;
                 state.isAuthenticated = true;
+            })
+            .addMatcher(reportApi.endpoints.addReport.matchFulfilled, (state) => {
+                if (state.user) {
+                    state.user.bill -= 1;
+                }
             })
     }
 });

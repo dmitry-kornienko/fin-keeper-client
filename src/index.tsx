@@ -9,6 +9,16 @@ import { ConfigProvider, theme } from "antd";
 import { Auth } from "./features/auth/auth";
 import "./index.css";
 
+import locale from "antd/es/locale/ru_RU";
+import updateLocale from "dayjs/plugin/updateLocale";
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
+
+dayjs.extend(updateLocale);
+dayjs.updateLocale("ru", {
+  weekStart: 1
+});
+
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
@@ -18,8 +28,10 @@ root.render(
             <Provider store={store}>
                 <Auth>
                     <ConfigProvider theme={{
-                        algorithm: theme.defaultAlgorithm
-                    }}>
+                            algorithm: theme.defaultAlgorithm
+                        }}
+                        locale={locale}
+                    >
                         <App />
                     </ConfigProvider>
                 </Auth>
