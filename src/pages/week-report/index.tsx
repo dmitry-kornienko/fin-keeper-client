@@ -42,6 +42,8 @@ export const WeekReportsPage = () => {
 
     const handleAddReport = async () => {
         try {
+            setError("");
+            
             await addReport(dates).unwrap();
             await getAllReports();
 
