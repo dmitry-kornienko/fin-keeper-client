@@ -1,0 +1,10 @@
+.formAddReport {
+    display: flex;
+    justify-content: space-between;
+}
+
+.apiAdding {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

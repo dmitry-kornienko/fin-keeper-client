@@ -1,4 +1,4 @@
-import { DatePicker, Space, message } from "antd";
+import { DatePicker, Modal, message } from "antd";
 import { CustomButton } from "../../components/custom-button";
 import { Layout } from "../../components/layout";
 import { WeekReports } from "../../components/week-reports";
@@ -10,6 +10,8 @@ import {
 } from "../../app/services/report";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { ErrorMessage } from "../../components/error-message";
+import styles from './index.module.css';
+import { ReportExcelForm } from "../../components/report-excel-form";
 
 const { RangePicker } = DatePicker;
 
@@ -18,6 +20,7 @@ export const WeekReportsPage = () => {
     const { refetch: getAllReports } = useGetAllReportsQuery();
 
     const [error, setError] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [dates, setDates] = useState({
         dateFrom: "",
@@ -38,6 +41,14 @@ export const WeekReportsPage = () => {
             type: "error",
             content: "Не удалось создать новый отчет",
         });
+    };
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const hideModal = () => {
+        setIsModalOpen(false);
     };
 
     const handleAddReport = async () => {
@@ -84,19 +95,35 @@ export const WeekReportsPage = () => {
     return (
         <Layout>
             {contextHolder}
-            <Space>
-                <RangePicker onChange={onChangeDate} />
+            <div className={styles.formAddReport}>
+                <div className={styles.apiAdding}>
+                    <RangePicker onChange={onChangeDate} />
+                    <CustomButton
+                        onClick={handleAddReport}
+                        type="primary"
+                        loading={isLoading}
+                        disabled={!dates.dateFrom || !dates.dateTo}
+                    >
+                        Добавить отчет
+                    </CustomButton>
+                </div>
                 <CustomButton
-                    onClick={handleAddReport}
-                    type="primary"
-                    loading={isLoading}
-                    disabled={!dates.dateFrom || !dates.dateTo}
+                    onClick={ showModal }
+                    type="link"
                 >
-                    Добавить отчет
+                    Добавить через Excel
                 </CustomButton>
                 <ErrorMessage message={error} />
-            </Space>
+            </div>
             <WeekReports />
+            <Modal
+                title="Ручное добавление отчета"
+                open={isModalOpen}
+                footer={null}
+                onCancel={ hideModal }
+            >
+                <ReportExcelForm />
+            </Modal>
         </Layout>
     );
 };
