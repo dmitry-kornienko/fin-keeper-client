@@ -50,6 +50,11 @@ const slice = createSlice({
                     state.user.bill -= 1;
                 }
             })
+            .addMatcher(reportApi.endpoints.addReportThroughExcel.matchFulfilled, (state) => {
+                if (state.user) {
+                    state.user.bill -= 1;
+                }
+            })
     }
 });
 

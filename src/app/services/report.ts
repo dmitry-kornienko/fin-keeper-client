@@ -22,6 +22,21 @@ export const reportApi = api.injectEndpoints({
                 body: data
             })
         }),
+        addReportThroughExcel: builder.mutation<Report, {dateFrom: string, dateTo: string, realizationreport_id: string, file: File}>({
+            query: ({ dateFrom, dateTo, realizationreport_id, file }) => {
+                const formData = new FormData();
+                formData.append('dateFrom', dateFrom);
+                formData.append('dateTo', dateTo);
+                formData.append('realizationreport_id', realizationreport_id);
+                formData.append('file', file);
+        
+                return {
+                    url: `/report/add-through-excel`,
+                    method: 'POST',
+                    body: formData
+                };
+            },
+        }),
         removeReport: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/report/remove/${id}`,
@@ -45,6 +60,6 @@ export const reportApi = api.injectEndpoints({
     })
 });
 
-export const { useGetAllReportsQuery, useAddReportMutation, useGetReportQuery, useRemoveReportMutation, useEditAdditionalParametersReportMutation, useEditCostPriceMutation } = reportApi;
+export const { useGetAllReportsQuery, useAddReportMutation, useAddReportThroughExcelMutation, useGetReportQuery, useRemoveReportMutation, useEditAdditionalParametersReportMutation, useEditCostPriceMutation } = reportApi;
 
-export const { endpoints: { getAllReports, getReport, addReport, removeReport, editAdditionalParametersReport, editCostPrice } } = reportApi;
+export const { endpoints: { getAllReports, getReport, addReport, addReportThroughExcel, removeReport, editAdditionalParametersReport, editCostPrice } } = reportApi;

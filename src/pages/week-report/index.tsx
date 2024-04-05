@@ -10,7 +10,7 @@ import {
 } from "../../app/services/report";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { ErrorMessage } from "../../components/error-message";
-import styles from './index.module.css';
+import styles from "./index.module.css";
 import { ReportExcelForm } from "../../components/report-excel-form";
 
 const { RangePicker } = DatePicker;
@@ -54,7 +54,7 @@ export const WeekReportsPage = () => {
     const handleAddReport = async () => {
         try {
             setError("");
-            
+
             await addReport(dates).unwrap();
             await getAllReports();
 
@@ -106,23 +106,24 @@ export const WeekReportsPage = () => {
                     >
                         Добавить отчет
                     </CustomButton>
+                <ErrorMessage message={error} />
                 </div>
-                <CustomButton
-                    onClick={ showModal }
-                    type="link"
-                >
+                <CustomButton onClick={showModal} type="link">
                     Добавить через Excel
                 </CustomButton>
-                <ErrorMessage message={error} />
             </div>
             <WeekReports />
             <Modal
                 title="Ручное добавление отчета"
                 open={isModalOpen}
                 footer={null}
-                onCancel={ hideModal }
+                onCancel={hideModal}
             >
-                <ReportExcelForm />
+                <ReportExcelForm
+                    hideModal={hideModal}
+                    success={success}
+                    errorReq={errorReq}
+                />
             </Modal>
         </Layout>
     );
