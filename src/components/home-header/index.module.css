@@ -1,0 +1,21 @@
+.wrapper {
+    background-color: rgb(231, 231, 231);
+}
+.header {
+    width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    color: black;
+    background-color: rgb(231, 231, 231);
+}
+.logo {
+    font-size: 33px;
+    font-weight: bold;
+}
+.populate__header {
+    font-size: 12px;
+    color: gray;
+}

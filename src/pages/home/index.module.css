@@ -1,0 +1,16 @@
+.container {
+    width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+.content {
+    margin-top: 50px;
+    font-size: 37px;
+    font-weight: 400;
+}
+.content span {
+    font-weight: bold;
+}
+.content button {
+    margin-top: 30px;
+}

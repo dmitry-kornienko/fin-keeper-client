@@ -23,7 +23,7 @@ export const Header = () => {
     return (
         <Layout.Header className={styles.header}>
             <Space>
-                <Link to={Paths.weekReport}>
+                <Link to={user ? Paths.weekReport : Paths.home}>
                     <Typography className={styles.logo}>FinKeeper</Typography>
                 </Link>
             </Space>
