@@ -11,6 +11,7 @@ import { Descriptions, Divider, Form, Input, Modal, Space, Table, message } from
 import {
     LeftOutlined,
     EditOutlined,
+    ExclamationCircleOutlined,
     DeleteOutlined,
     SettingOutlined,
     FormOutlined,
@@ -104,13 +105,16 @@ export const Report = () => {
             ),
             dataIndex: "cost_price",
             render: (_, record) => (
-                <Space className={styles.iconTooltipContainer}>
-                    <span>{record.cost_price}</span>
-                    <EditOutlined
-                        onClick={showEditCostPriceModal}
-                        className={styles.iconTooltip}
-                    />
-                </Space>
+                <>
+                    <Space className={record.cost_price <= 0 ? styles.emptyCostPrice : styles.iconTooltipContainer}>
+                        <span>{record.cost_price}</span>
+                        <EditOutlined
+                            onClick={showEditCostPriceModal}
+                            className={styles.iconTooltip}
+                        />
+                    </Space>
+                    {!record.cost_price && <ExclamationCircleOutlined style={{ paddingLeft: "10px" }} /> }
+                </>
             ),
             key: "cost_price,",
         },

@@ -24,3 +24,13 @@
 .iconTooltipContainer:hover .iconTooltip {
     opacity: 1;
 }
+
+.emptyCostPrice {
+    background-color: rgb(255, 177, 117);
+    border-radius: 5px;
+    padding: 0 10px 0 10px;
+}
+
+.emptyCostPrice:hover .iconTooltip {
+    opacity: 1;
+}
