@@ -169,7 +169,7 @@ export const Home = () => {
                         </div>
                     </div>
                     <div className={styles.newFeature__footer}>
-                        Присоединяйтесь к нам и следите за всеми обнавлениями.
+                        Присоединяйтесь к нам и следите за всеми обновлениями.
                     </div>
                 </div>
             </div>
