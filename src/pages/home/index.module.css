@@ -1,16 +1,176 @@
 .container {
     width: 900px;
     margin: 0 auto;
-    text-align: center;
 }
-.content {
-    margin-top: 50px;
+.header {
     font-size: 37px;
-    font-weight: 400;
+    text-align: center;
+    margin-top: 40px;
 }
-.content span {
+.header img {
+    margin-top: 40px;
+    width: 700px;
+    border-radius: 12px;
+}
+.header span {
     font-weight: bold;
 }
-.content button {
-    margin-top: 30px;
+.header button {
+    margin-top: 20px;
+}
+.reportList, .report {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+.reportList img {
+    width: 500px;
+}
+.reportList img:hover {
+    transform: scale(1.1);
+    transition: all 0.7s;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+.reportList__description, .report__description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 10px;
+}
+.report img {
+    width: 595px;
+}
+.report img:hover {
+    transform: scale(1.1);
+    transition: all 0.7s;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+.advantages {
+    position: relative;
+    display: flex;
+    margin-top: 70px;
+    font-size: 24px;
+}
+.advantages__text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.advantages img {
+    display: block;
+    width: 300px;
+    position: absolute;
+    right: 0;
+    top: 35px;
+}
+.advantages img:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+.prices {
+    text-align: center;
+}
+.prices p {
+    font-size: 18px;
+    margin: 20px 0 20px 0;
+}
+.prices button {
+    font-weight: bold;
+}
+.prices__header {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 90px;
+}
+.rates {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 40px;
+}
+.rate {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    background-color: #9ad9f2;
+    border-radius: 23px;
+    position: relative;
+    background-color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: filter 0.3s ease;
+}
+.rate:hover {
+    transform: translateY(-7px);
+    transition: all 0.5s;
+}
+.rate span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(170, 37, 37);
+    background-color: #f7f389;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    font-weight: 600;
+    position: absolute;
+    top: -25px;
+    right: -15px;
+}
+.rate__name {
+    font-size: 22px;
+    font-weight: bold;
+}
+.rate__price {
+    font-size: 28px;
+    font-weight: bold;
+}
+.rate__prevPrice {
+    color: rgb(170, 37, 37);
+    font-weight: 600;
+    font-size: 24px;
+    text-decoration: line-through;
+}
+.newFeature {
+    font-size: 20px;
+    margin-top: 60px;
+}
+.newFeature__header {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+.newFeature__blocks {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+}
+.newFeature__block {
+    background-color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: filter 0.3s ease;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+}
+.newFeature__block:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s;
+}
+.newFeature__footer {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin: 40px 0 50px 0;
 }
