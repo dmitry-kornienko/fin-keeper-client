@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, DatePicker, Divider, Form, Space, Upload } from "antd";
 import dayjs from "dayjs";
+import type { Dayjs } from "dayjs";
 import { CustomButton } from "../custom-button";
 import { CustomInput } from "../custom-input";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
@@ -23,9 +24,12 @@ export interface ExcelDataRow {
 
 interface AddReportData {
     realizationreport_id: string;
+    date: (Dayjs | null)[],
     dateFrom: string;
     dateTo: string;
 }
+
+const { RangePicker } = DatePicker;
 
 export const ReportExcelForm: React.FC<Props> = ({
     hideModal,
@@ -46,8 +50,8 @@ export const ReportExcelForm: React.FC<Props> = ({
     const handleAddReportThroughExcel = async (data: AddReportData) => {
         try {
             const formattedData = {
-                dateFrom: dayjs(data.dateFrom).format("YYYY-MM-DD"),
-                dateTo: dayjs(data.dateTo).format("YYYY-MM-DD"),
+                dateFrom: dayjs(data.date[0]).format("YYYY-MM-DD"),
+                dateTo: dayjs(data.date[1]).format("YYYY-MM-DD"),
             };
             if (excelData) {
                 await addReport({
@@ -80,16 +84,10 @@ export const ReportExcelForm: React.FC<Props> = ({
             />
             <Space>
                 <Form.Item
-                    name="dateFrom"
+                    name="date"
                     rules={[{ required: true, message: "Обязательное поле" }]}
                 >
-                    <DatePicker placeholder="Дата начала" />
-                </Form.Item>
-                <Form.Item
-                    name="dateTo"
-                    rules={[{ required: true, message: "Обязательное поле" }]}
-                >
-                    <DatePicker placeholder="Дата конца" />
+                    <RangePicker />
                 </Form.Item>
             </Space>
             <Form.Item
@@ -101,11 +99,11 @@ export const ReportExcelForm: React.FC<Props> = ({
                     accept=".xlsx, .xls"
                     maxCount={1}
                 >
-                    <Button icon={<UploadOutlined />}>Выберите файл</Button>
+                    <Button icon={<UploadOutlined />}>Загрузить детализацию</Button>
                 </Upload>
             </Form.Item>
             <Divider />
-            <CustomButton htmlType="submit" loading={isLoading}>
+            <CustomButton type="primary" htmlType="submit" loading={isLoading}>
                 Добавить
             </CustomButton>
             <ErrorMessage message={error} />

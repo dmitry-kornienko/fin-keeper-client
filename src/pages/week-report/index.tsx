@@ -3,7 +3,7 @@ import { CustomButton } from "../../components/custom-button";
 import { Layout } from "../../components/layout";
 import { WeekReports } from "../../components/week-reports";
 import { useState } from "react";
-import type { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import {
     useAddReportMutation,
     useGetAllReportsQuery,
@@ -21,6 +21,11 @@ export const WeekReportsPage = () => {
 
     const [error, setError] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const disabledDate = (current: Dayjs | null): boolean => {
+        const threeMonthsAgo = dayjs().subtract(3, 'month');
+        return current ? current.isBefore(threeMonthsAgo, 'day') : false;
+      };
 
     const [dates, setDates] = useState({
         dateFrom: "",
@@ -97,7 +102,7 @@ export const WeekReportsPage = () => {
             {contextHolder}
             <div className={styles.formAddReport}>
                 <div className={styles.apiAdding}>
-                    <RangePicker onChange={onChangeDate} />
+                    <RangePicker disabledDate={disabledDate} onChange={onChangeDate} />
                     <CustomButton
                         onClick={handleAddReport}
                         type="primary"

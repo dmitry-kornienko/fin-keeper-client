@@ -79,6 +79,7 @@ export const WeekReports = () => {
             size="small"
             columns={columns}
             className={ styles.reportsTable }
+            rowClassName={styles.pointer}
             rowKey={(report) => report._id}
                 onRow={(report) => {
                     return {

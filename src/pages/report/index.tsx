@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
     useEditAdditionalParametersReportMutation,
     useEditCostPriceMutation,
@@ -289,7 +289,11 @@ export const Report = () => {
                 <>
                     <Descriptions title="Детализация отчета" size="small">
                         <Descriptions.Item label="Номер отчета">
-                            {data?.realizationreport_id}
+                            <Link
+                                target="_blank"
+                                to={`https://seller.wildberries.ru/suppliers-mutual-settlements/reports-implementations/reports-weekly-new/report/${data?.realizationreport_id}`}>
+                                {data?.realizationreport_id}
+                            </Link>
                         </Descriptions.Item>
                         <Descriptions.Item label="Дата начала">
                             {data ? `${getDate(data.date_from)}` : ""}
@@ -335,7 +339,9 @@ export const Report = () => {
                         </Descriptions.Item>
                         <Descriptions.Item label="Хранение">
                             <Space>
-                                {data?.storage}
+                                {data ?
+                                    addSpacesToNumberWithDecimal(data.storage) : ""
+                                }
                                 <SettingOutlined
                                     className={styles.editBtn}
                                     onClick={showEditModal}
@@ -344,7 +350,9 @@ export const Report = () => {
                         </Descriptions.Item>
                         <Descriptions.Item label="Платная приемка">
                             <Space>
-                                {data?.taking_payment}
+                                {data ?
+                                    addSpacesToNumberWithDecimal(data.taking_payment) : ""
+                                }
                                 <SettingOutlined
                                     className={styles.editBtn}
                                     onClick={showEditModal}
@@ -353,7 +361,9 @@ export const Report = () => {
                         </Descriptions.Item>
                         <Descriptions.Item label="Прочие удержания">
                             <Space>
-                                {data?.other_deductions}
+                                {data ?
+                                    addSpacesToNumberWithDecimal(data.other_deductions) : ""
+                                }
                                 <SettingOutlined
                                     className={styles.editBtn}
                                     onClick={showEditModal}

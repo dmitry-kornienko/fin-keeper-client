@@ -1,3 +1,8 @@
 .reportsTable {
     margin-top: 10px;
 }
+.pointer:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+    transition: all 0.3s;
+}

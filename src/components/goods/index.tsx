@@ -91,7 +91,7 @@ export const Goods = () => {
         {
             title: (
                 <Space>
-                    <span>Себестоимость ед.</span>
+                    <span>Себестоимость</span>
                     <FormOutlined
                         onClick={showEditCostPriceModal}
                         className={styles.editCostPriceBtn}
