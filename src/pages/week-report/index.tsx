@@ -1,4 +1,4 @@
-import { DatePicker, Modal, message } from "antd";
+import { Alert, DatePicker, Modal, message } from "antd";
 import { CustomButton } from "../../components/custom-button";
 import { Layout } from "../../components/layout";
 import { WeekReports } from "../../components/week-reports";
@@ -21,6 +21,8 @@ export const WeekReportsPage = () => {
 
     const [error, setError] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const currentDayOfWeek = dayjs().day();
 
     const disabledDate = (current: Dayjs | null): boolean => {
         const threeMonthsAgo = dayjs().subtract(3, 'month');
@@ -100,19 +102,25 @@ export const WeekReportsPage = () => {
     return (
         <Layout>
             {contextHolder}
-            <div className={styles.formAddReport}>
-                <div className={styles.apiAdding}>
-                    <RangePicker disabledDate={disabledDate} onChange={onChangeDate} />
-                    <CustomButton
-                        onClick={handleAddReport}
-                        type="primary"
-                        loading={isLoading}
-                        disabled={!dates.dateFrom || !dates.dateTo}
-                    >
-                        Добавить отчет
-                    </CustomButton>
-                <ErrorMessage message={error} />
-                </div>
+            <div className={styles.forms} >
+                {
+                    currentDayOfWeek !== 1 ? (
+                        <div className={styles.formAddReport}>
+                            <div className={styles.apiAdding}>
+                                <RangePicker disabledDate={disabledDate} onChange={onChangeDate} />
+                                <CustomButton
+                                    onClick={handleAddReport}
+                                    type="primary"
+                                    loading={isLoading}
+                                    disabled={!dates.dateFrom || !dates.dateTo}
+                                >
+                                    Добавить отчет
+                                </CustomButton>
+                            <ErrorMessage message={error} />
+                            </div>
+                        </div>
+                    ): <Alert message="По понедельникам API WB не работает. Можете загрузить отчет через Excel" type="error" />
+                }
                 <CustomButton onClick={showModal} type="link">
                     Добавить через Excel
                 </CustomButton>

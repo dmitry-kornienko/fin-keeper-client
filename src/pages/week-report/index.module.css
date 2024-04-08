@@ -8,3 +8,11 @@
     gap: 5px;
     align-items: center;
 }
+.forms {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.monday {
+    color: rgb(215, 72, 72);
+}
