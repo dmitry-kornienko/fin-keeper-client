@@ -170,6 +170,16 @@ export const Report = () => {
                         record.sale_count
                 ),
         },
+        {
+            title: "Рентабельность",
+            render: (_, record) =>
+                `${((((record.sale_sum -
+                    record.return_sum -
+                    record.cost_price * record.sale_count -
+                    record.delivery -
+                    record.retail_amount * 0.07) /
+                    record.sale_count) / record.cost_price) * 100).toFixed()} %`
+        },
     ];
 
     const [messageApi, contextHolder] = message.useMessage();
