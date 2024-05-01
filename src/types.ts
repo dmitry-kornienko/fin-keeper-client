@@ -11,7 +11,9 @@ export type User = {
     email: string;
     password: string;
     bill: number;
-    tokenWB: string
+    tokenWB: string;
+    isActivated: boolean;
+    activationLink: string;
 }
 
 export type Report = {

@@ -5,13 +5,13 @@ import { RootState } from '../../app/store';
 import { reportApi } from '../../app/services/report';
 
 interface InitialState {
-    user: User & { token: string } | null,
-    isAuthenticated: boolean
+    user: User | null,
+    token: string | null
 }
 
 const initialState: InitialState = {
     user: null,
-    isAuthenticated: false
+    token: null
 }
 
 const slice = createSlice({
@@ -23,27 +23,24 @@ const slice = createSlice({
             if (state.user) {
                 state.user.name = action.payload.name;
                 state.user.email = action.payload.email;
-                state.isAuthenticated = true;
             }
         }
     },
     extraReducers: (builder) => {
         builder
             .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
-                state.user = action.payload;
-                state.isAuthenticated = true;
+                state.user = action.payload.user;
+                state.token = action.payload.accessToken;
             })
             .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
-                state.user = action.payload;
-                state.isAuthenticated = true;
+                state.user = action.payload.user;
+                state.token = action.payload.accessToken;
             })
             .addMatcher(authApi.endpoints.current.matchFulfilled, (state, action) => {
-                state.user = action.payload;
-                state.isAuthenticated = true;
+                state.user = action.payload.user;
             })
             .addMatcher(authApi.endpoints.updateUserInfo.matchFulfilled, (state, action) => {
-                state.user = action.payload;
-                state.isAuthenticated = true;
+                state.user = action.payload.user;
             })
             .addMatcher(reportApi.endpoints.addReport.matchFulfilled, (state) => {
                 if (state.user) {
@@ -61,6 +58,6 @@ const slice = createSlice({
 export const { logout, updateUserInfo } = slice.actions;
 export default slice.reducer;
 
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
+// export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 
 export const selectUser = (state: RootState) => state.auth.user;

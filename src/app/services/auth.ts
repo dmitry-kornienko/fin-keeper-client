@@ -2,20 +2,24 @@ import { User } from '../../types';
 import { api } from './api';
 
 export type UserData = Omit<User, 'id'>;
-type ResponsLoginData = User & { token: string };
+type ResponsLoginData = {
+    user: User,
+    accessToken: string,
+    refreshToken: string
+};
 
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation<ResponsLoginData, UserData>({
             query: (UserData) => ({
-                url: '/user/login',
+                url: '/auth/login',
                 method: 'POST',
                 body: UserData
             })
         }),
         register: builder.mutation<ResponsLoginData, UserData>({
             query: (UserData) => ({
-                url: '/user/register',
+                url: '/auth/registration',
                 method: 'POST',
                 body: UserData
             })
@@ -36,7 +40,7 @@ export const authApi = api.injectEndpoints({
         }),
         current: builder.query<ResponsLoginData, void>({
             query: () => ({
-                url: '/user/current',
+                url: '/auth/current',
                 method: 'GET',
             })
         }),
