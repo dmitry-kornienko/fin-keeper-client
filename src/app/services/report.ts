@@ -5,19 +5,19 @@ export const reportApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getAllReports: builder.query<Report[], void>({
             query: () => ({
-                url: '/report',
+                url: '/reports',
                 method: 'GET',
             })
         }),
         getReport: builder.query<Report, string>({
             query: (id) => ({
-                url: `/report/${id}`,
+                url: `/reports/${id}`,
                 method: 'GET',
             })
         }),
-        addReport: builder.mutation<Report, {dateFrom: string, dateTo: string}>({
+        addReport: builder.mutation<Report, {date_from: string, date_to: string}>({
             query: (data) => ({
-                url: `/report/add`,
+                url: `/reports/add`,
                 method: 'POST',
                 body: data
             })
@@ -39,7 +39,7 @@ export const reportApi = api.injectEndpoints({
         }),
         removeReport: builder.mutation<void, string>({
             query: (id) => ({
-                url: `/report/remove/${id}`,
+                url: `/reports/delete/${id}`,
                 method: 'DELETE',
             })
         }),
@@ -52,7 +52,7 @@ export const reportApi = api.injectEndpoints({
         }),
         editCostPrice: builder.mutation<void, { id: string, composition: { article: string, cost_price: number }[] }>({
             query: (data) => ({
-                url: `/report/update-cost-price/${data.id}`,
+                url: `/reports/update-cost-pice/${data.id}`,
                 method: 'PATCH',
                 body: data.composition
             })

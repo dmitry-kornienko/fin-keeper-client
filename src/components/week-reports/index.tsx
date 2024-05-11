@@ -11,7 +11,7 @@ import { addSpacesToNumberWithDecimal } from "../../utils/add-spaces-to-number";
 
 export const WeekReports = () => {
     const { data, isLoading } = useGetAllReportsQuery();
-
+    
     const navigate = useNavigate();
 
     const columns: ColumnsType<Report> = [

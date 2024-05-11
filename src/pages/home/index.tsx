@@ -18,25 +18,25 @@ export const Home = () => {
         {
             id: 1,
             name: "Начало",
-            price: 350,
+            price: 450,
             report_count: 1,
         },
         {
             id: 2,
             name: "Стандарт",
-            price: 900,
+            price: 1200,
             report_count: 3,
         },
         {
             id: 3,
             name: "Продвинутый",
-            price: 1750,
+            price: 2300,
             report_count: 6,
         },
         {
             id: 4,
             name: "Премиум",
-            price: 2500,
+            price: 3300,
             report_count: 9,
         },
     ];
