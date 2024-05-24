@@ -72,7 +72,13 @@ export const Report = () => {
 
     const getCostPriceOfReport = (report: ReportType): number => {
         const sum = report.composition.reduce(
-            (sum, el) => sum + el.cost_price * el.sale_count,
+            (sum, el) => {
+                sum += el.cost_price * el.sale_count;
+                if (el.return_count > 0) {
+                    sum -= el.cost_price * el.return_count
+                }
+                return sum
+            },
             0
         );
         return sum;

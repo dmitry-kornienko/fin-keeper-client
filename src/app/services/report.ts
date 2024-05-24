@@ -31,7 +31,7 @@ export const reportApi = api.injectEndpoints({
                 formData.append('file', file);
         
                 return {
-                    url: `/report/add-through-excel`,
+                    url: `/reports/add-through-excel`,
                     method: 'POST',
                     body: formData
                 };
