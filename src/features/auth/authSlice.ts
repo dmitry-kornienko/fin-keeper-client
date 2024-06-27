@@ -24,6 +24,9 @@ const slice = createSlice({
                 state.user.name = action.payload.name;
                 state.user.email = action.payload.email;
             }
+        },
+        setToken(state, action: PayloadAction<string | null>) {
+            state.token = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -55,9 +58,7 @@ const slice = createSlice({
     }
 });
 
-export const { logout, updateUserInfo } = slice.actions;
+export const { logout, updateUserInfo, setToken } = slice.actions;
 export default slice.reducer;
-
-// export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 
 export const selectUser = (state: RootState) => state.auth.user;
